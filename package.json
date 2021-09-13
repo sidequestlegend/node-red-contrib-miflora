@@ -2,7 +2,7 @@
   "name": "node-red-contrib-miflora",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "miflora.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,10 +10,18 @@
     "type": "git",
     "url": "git+https://github.com/sidequestlegend/node-red-contrib-miflora.git"
   },
+  "node-red": {
+    "nodes": {
+      "miflora": "miflora.js"
+    }
+  },
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/sidequestlegend/node-red-contrib-miflora/issues"
   },
-  "homepage": "https://github.com/sidequestlegend/node-red-contrib-miflora#readme"
+  "homepage": "https://github.com/sidequestlegend/node-red-contrib-miflora#readme",
+  "dependencies": {
+    "miflora": "^1.0.6"
+  }
 }
