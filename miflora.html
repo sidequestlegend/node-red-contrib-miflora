@@ -1,26 +1,31 @@
 <script type="text/javascript">
     RED.nodes.registerType('miflora',{
-        category: 'function',
-        color: '#a6bbcf',
+        category: 'bluetooth',
+        color: '#1d5c99',
         defaults: {
-            name: {value:""}
+            name: {value:""},
+            mac: {value:""}
         },
         inputs:1,
         outputs:1,
-        // icon: "file.png",
+        icon: "bluetooth.png",
         label: function() {
-            return this.name||"miflora";
+            return this.name||this.mac||"miflora";
         }
     });
 </script>
 
 <script type="text/html" data-template-name="miflora">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-mac"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mac"><i class="fa fa-tag"></i> Mac</label>
+        <input type="text" id="node-input-mac" placeholder="00:00:00:00:00">
     </div>
 </script>
 
 <script type="text/html" data-help-name="miflora">
-    <p>A simple node that converts the message payloads into all lower-case characters</p>
+    <p>A simple node that captures data from a Xaoimi Mi Flore Care sensor in 2021</p>
 </script>

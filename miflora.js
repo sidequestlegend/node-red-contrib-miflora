@@ -1,17 +1,30 @@
+const miflora = require('miflora');
 module.exports = function(RED) {
-    function MifloraNode(config) {
-        RED.nodes.createNode(this,config);
-        var node = this;
+    async function MifloraNode(config) {
+        RED.nodes.createNode(this, config);
+        let node = this;
+        const opts = {
+            duration: 60000,
+            ignoreUnknown: true,
+            addresses: [config.mac]
+        };
+        miflora.discover(opts)
+            .then(devices => this.device = devices[0]);
         node.on('input', function(msg) {
-            msg.payload = msg.payload.toLowerCase();
-            node.send(msg);
+            node.device.queryFirmwareInfo()
+            .then(() => node.device.querySensorValues())
+                .then(res => {
+                    msg.payload = res;
+                })
+                .then(() =>{
+                })
         });
     }
     RED.nodes.registerType("miflora",MifloraNode);
 }
 
 
-// const miflora = require('miflora');
+//
 // const http = require('http');
 // const cors = require('cors');
 // const express = require('express');
