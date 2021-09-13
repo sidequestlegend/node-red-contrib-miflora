@@ -10,9 +10,9 @@ module.exports = function(RED) {
         };
         miflora.discover(opts)
             .then(devices => node.device = devices[0]);
-
-        node.on('input', function(msg) {
+        const getSensorValues = (msg) => {
             if(node.device) {
+                msg = msg || {};
                 node.device.queryFirmwareInfo()
                     .then(() => node.device.querySensorValues())
                     .then(res => {
@@ -20,7 +20,11 @@ module.exports = function(RED) {
                         node.send(msg);
                     })
             }
-        });
+        };
+        node.on('input', msg => getSensorValues(msg));
+        if(config.interval) {
+            setInterval(()=>getSensorValues(), config.interval);
+        }
     }
     RED.nodes.registerType("miflora",MifloraNode);
  }

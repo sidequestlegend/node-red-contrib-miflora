@@ -4,7 +4,8 @@
         color: '#1d5c99',
         defaults: {
             name: {value:""},
-            mac: {value:""}
+            mac: {value:""},
+            interval: {value:0}
         },
         inputs:1,
         outputs:1,
@@ -23,6 +24,10 @@
     <div class="form-row">
         <label for="node-input-mac"><i class="fa fa-tag"></i> Mac</label>
         <input type="text" id="node-input-mac" placeholder="00:00:00:00:00">
+    </div>
+    <div class="form-row">
+        <label for="node-input-interval"><i class="fa fa-tag"></i> Timer Interval (ms)</label>
+        <input type="number" id="node-input-interval" placeholder="300000">
     </div>
 </script>
 
