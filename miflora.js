@@ -24,10 +24,9 @@ module.exports = function(RED) {
                     })
             }
         };
-        node.on('close', function() {
+        node.on('close', function(done) {
             if(node.device) {
-                node.send({disconnect:true});
-                node.device.disconnect();
+                node.device.disconnect().then(()=> done());
             }
         });
         node.on('input', msg => getSensorValues(msg));
