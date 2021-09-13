@@ -10,6 +10,7 @@ module.exports = function(RED) {
         };
         miflora.discover(opts)
             .then(devices => node.device = devices[0]);
+        node.send(node.device);
         const getSensorValues = (msg) => {
             if(node.device) {
                 msg = msg || {};
@@ -23,6 +24,7 @@ module.exports = function(RED) {
         };
         node.on('close', function() {
             if(node.device) {
+                node.send({disconnect:true});
                 node.device.disconnect();
             }
         });
