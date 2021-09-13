@@ -16,8 +16,7 @@ module.exports = function(RED) {
                     .then(() => node.device.querySensorValues())
                     .then(res => {
                         msg.payload = res;
-                    })
-                    .then(() =>{
+                        node.send(msg);
                     })
             }
         });
