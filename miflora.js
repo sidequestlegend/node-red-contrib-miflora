@@ -27,6 +27,8 @@ module.exports = function(RED) {
         node.on('close', function(done) {
             if(node.device) {
                 node.device.disconnect().then(()=> done());
+            }else{
+                done();
             }
         });
         node.on('input', msg => getSensorValues(msg));
