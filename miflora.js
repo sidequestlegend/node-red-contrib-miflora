@@ -21,6 +21,11 @@ module.exports = function(RED) {
                     })
             }
         };
+        node.on('close', function() {
+            if(node.device) {
+                node.device.disconnect();
+            }
+        });
         node.on('input', msg => getSensorValues(msg));
         if(config.interval) {
             setInterval(()=>getSensorValues(), config.interval);
