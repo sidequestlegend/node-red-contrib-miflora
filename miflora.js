@@ -1,6 +1,6 @@
 const miflora = require('miflora');
 module.exports = function(RED) {
-    async function MifloraNode(config) {
+    function MifloraNode(config) {
         RED.nodes.createNode(this, config);
         let node = this;
         const opts = {
