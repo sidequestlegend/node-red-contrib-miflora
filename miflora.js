@@ -9,15 +9,17 @@ module.exports = function(RED) {
             addresses: [config.mac]
         };
         miflora.discover(opts)
-            .then(devices => this.device = devices[0]);
+            .then(devices => node.device = devices[0]);
         node.on('input', function(msg) {
-            node.device.queryFirmwareInfo()
-            .then(() => node.device.querySensorValues())
-                .then(res => {
-                    msg.payload = res;
-                })
-                .then(() =>{
-                })
+            if(node.device) {
+                node.device.queryFirmwareInfo()
+                    .then(() => node.device.querySensorValues())
+                    .then(res => {
+                        msg.payload = res;
+                    })
+                    .then(() =>{
+                    })
+            }
         });
     }
     RED.nodes.registerType("miflora",MifloraNode);
