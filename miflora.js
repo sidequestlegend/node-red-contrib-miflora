@@ -8,9 +8,11 @@ module.exports = function(RED) {
             ignoreUnknown: true,
             addresses: [config.mac]
         };
+        this.status({fill:"red",shape:"ring",text:"connecting"});
+
         miflora.discover(opts)
-            .then(devices => node.device = devices[0]);
-        node.send(node.device);
+            .then(devices => node.device = devices[0])
+            .then(()=>this.status({fill:"green",shape:"dot",text:"connected"}));
         const getSensorValues = (msg) => {
             if(node.device) {
                 msg = msg || {};
