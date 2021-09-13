@@ -1,7 +1,7 @@
 const miflora = require('miflora');
-module.exports = function(RED) {
+//module.exports = function(RED) {
     async function MifloraNode(config) {
-        RED.nodes.createNode(this, config);
+        //RED.nodes.createNode(this, config);
         let node = this;
         const opts = {
             duration: 60000,
@@ -10,6 +10,7 @@ module.exports = function(RED) {
         };
         miflora.discover(opts)
             .then(devices => node.device = devices[0]);
+
         node.on('input', function(msg) {
             if(node.device) {
                 node.device.queryFirmwareInfo()
@@ -21,8 +22,15 @@ module.exports = function(RED) {
             }
         });
     }
-    RED.nodes.registerType("miflora",MifloraNode);
-}
+    //RED.nodes.registerType("miflora",MifloraNode);
+    let something;
+    something = MifloraNode.bind(something, {mac: 'c4:7c:8d:66:23:b5'});
+    something.on = (str, callback) => {
+        setTimeout(()=>callback({}), 5000);
+    };
+    something.send = msg => console.log(msg);
+    something();
+ //}
 
 
 //
