@@ -1,7 +1,7 @@
 const miflora = require('miflora');
-//module.exports = function(RED) {
+module.exports = function(RED) {
     async function MifloraNode(config) {
-        //RED.nodes.createNode(this, config);
+        RED.nodes.createNode(this, config);
         let node = this;
         const opts = {
             duration: 60000,
@@ -22,15 +22,8 @@ const miflora = require('miflora');
             }
         });
     }
-    //RED.nodes.registerType("miflora",MifloraNode);
-    let something;
-    something = MifloraNode.bind(something, {mac: 'c4:7c:8d:66:23:b5'});
-    something.on = (str, callback) => {
-        setTimeout(()=>callback({}), 5000);
-    };
-    something.send = msg => console.log(msg);
-    something();
- //}
+    RED.nodes.registerType("miflora",MifloraNode);
+ }
 
 
 //
