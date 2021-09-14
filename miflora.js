@@ -14,6 +14,7 @@ module.exports = function(RED) {
         miflora.discover(opts)
             .then(devices => node.device = devices[0])
             .then(()=>this.status({fill:"green",shape:"dot",text:"connected"}));
+
         const getSensorValues = (msg) => {
             if(node.device) {
                 msg = msg || {};
@@ -26,10 +27,12 @@ module.exports = function(RED) {
             }
         };
         node.on('close', function(done) {
-            console.log("close..");
             if(node.device) {
                 console.log("there is a device so we are disconnecting..");
-                node.device.disconnect().then(()=> done());
+                node.device.disconnect().then(()=> {
+                    console.log("device disconnected..");
+                    done();
+                });
             }else{
                 done();
             }
