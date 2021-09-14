@@ -25,7 +25,9 @@ module.exports = function(RED) {
             }
         };
         node.on('close', function(done) {
+            console.log("close..");
             if(node.device) {
+                console.log("there is a device so we are disconnecting..");
                 node.device.disconnect().then(()=> done());
             }else{
                 done();
