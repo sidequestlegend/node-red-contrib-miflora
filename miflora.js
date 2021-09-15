@@ -30,7 +30,7 @@ module.exports = function(RED) {
             if(node.device) {
                 console.log("there is a device so we are disconnecting..");
                 node.device.disconnect().then(()=> {
-                    console.log("device disconnected..");
+                    miflora._devices = {};
                     done();
                 });
             }else{
