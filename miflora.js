@@ -7,29 +7,33 @@ module.exports = function(RED) {
         const opts = {
             duration: 60000,
             ignoreUnknown: true,
-            addresses: [config.mac]
+            addresses: config.mac.split(',').map(d=>d.trim())
         };
+
         this.status({fill:"red",shape:"ring",text:"connecting"});
 
         miflora.discover(opts)
-            .then(devices => node.device = devices[0])
+            .then(devices => node.devices = devices)
             .then(()=>this.status({fill:"green",shape:"dot",text:"connected"}));
 
         const getSensorValues = (msg) => {
-            if(node.device) {
-                msg = msg || {};
-                node.device.queryFirmwareInfo()
-                    .then(() => node.device.querySensorValues())
-                    .then(res => {
-                        msg.payload = res;
-                        node.send(msg);
-                    })
+            if(node.devices) {
+                node.devices.forEach(d => {
+                    msg = msg || {};
+                    d.queryFirmwareInfo()
+                        .then(() => d.querySensorValues())
+                        .then(res => {
+                            msg.payload = res;
+                            node.send(msg);
+                        });
+                });
             }
         };
+
         node.on('close', function(done) {
-            if(node.device) {
+            if(node.devices) {
                 console.log("there is a device so we are disconnecting..");
-                node.device.disconnect().then(()=> {
+                Promise.all(node.devices.map(d => d.disconnect())).then(()=> {
                     miflora._devices = {};
                     done();
                 });
